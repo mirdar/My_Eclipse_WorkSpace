@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>12945</projectId>
+    <resourceName>cate_feature</resourceName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <jobLauncher>com.tianch.cate.JobLauncher</jobLauncher>
+    <mapper>com.tianch.cate.MyMapper</mapper>
+    <reducer>com.tianch.cate.MyReducer</reducer>
+ 
+
+    <!--task-->
+    <mapOutputKey>item_id:bigint</mapOutputKey>
+    <mapOutputValue>id:bigint</mapOutputValue>
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+     <inputTables>
+        <table>
+            <name>item_cate_id</name>
+            <partitions>
+                
+            </partitions>
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>cate_f</name>
+        
+    </outputTable>
+</mapred>

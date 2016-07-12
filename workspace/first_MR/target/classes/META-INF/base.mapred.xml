@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>11370</projectId>
+    <resourceName>first_MR</resourceName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <jobLauncher>com.tianchi.first_MR.JobLauncher</jobLauncher>
+    <mapper>com.tianchi.first_MR.MyMapper</mapper>
+    <reducer>com.tianchi.first_MR.MyReducer</reducer>
+    <combiner>com.tianchi.first_MR.MyCombiner</combiner>
+
+    <!--task-->
+    <mapOutputKey>word:string</mapOutputKey>
+    <mapOutputValue>cnt:bigint</mapOutputValue>
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+    <inputTables>
+        <table>
+            <name>wordcount_in</name>
+            <partitions>
+                <partition>dt={yyyymmdd}</partition>
+                <partition>dt={yyyymmdd-1}</partition>
+            </partitions>
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>wordcount_out</name>
+        <partition>dt={yyyymmdd}</partition>
+    </outputTable>
+</mapred>

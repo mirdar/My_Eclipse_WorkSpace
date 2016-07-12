@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>12945</projectId>
+    <resourceName>cn_store</resourceName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <jobLauncher>com.tianchi.cate.JobLauncher</jobLauncher>
+    <mapper>com.tianchi.cate.MyMapper</mapper>
+    <reducer>com.tianchi.cate.MyReducer</reducer>
+  <!-- <combiner>my.group.cn_store.MyCombiner</combiner> --> 
+
+    <!--task-->
+    <mapOutputKey>item_id:string,store_code:bigint</mapOutputKey>
+    <mapOutputValue>date:bigint,sale:double</mapOutputValue>
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+     <inputTables>
+        <table>
+            <name>item_cate_2</name> <!-- 修改了的，要运行需修改 -->
+            <partitions>
+                
+            </partitions>
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>cate_feature</name>
+        
+    </outputTable>
+</mapred>

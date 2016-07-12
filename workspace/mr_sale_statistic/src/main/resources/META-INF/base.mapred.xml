@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>12945</projectId>
+    <resourceName>mr_sale_statistic</resourceName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <jobLauncher>my.group.mr.JobLauncher</jobLauncher>
+    <mapper>my.group.mr.MyMapper</mapper>
+    <reducer>my.group.mr.MyReducer</reducer>
+    
+    <!--task-->
+    <mapOutputKey>item_id:bigint,store_code:bigint</mapOutputKey>
+    <mapOutputValue>date:bigint,sale:double</mapOutputValue>
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+    <inputTables>
+        <table>
+            <name>item_store_feature_2</name> <!-- 修改了的，要运行需修改 -->
+            <partitions>
+                
+            </partitions>
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>item_store_sale_434</name>
+    </outputTable>
+</mapred>

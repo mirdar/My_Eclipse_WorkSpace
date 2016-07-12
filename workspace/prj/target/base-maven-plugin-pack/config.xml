@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapred>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>12945</projectId>
+    <resourceName>prj</resourceName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <jobLauncher>my.mr.JobLauncher</jobLauncher>
+    <mapper>my.mr.MyMapper</mapper>
+    <reducer>my.mr.MyReducer</reducer>
+   
+
+    <!--  task-->
+    <mapOutputKey>key:bigint</mapOutputKey>
+    <mapOutputValue>value:bigint</mapOutputValue>
+  
+    
+    <!--
+    <partitionColumns>col1,col2</partitionColumns>
+    <outputKeySortColumns>col1,col2</outputKeySortColumns>
+    <outputKeySortOrders>ASC,DESC</outputKeySortOrders>
+    <outputGroupingColumns>col1,col2</outputGroupingColumns>
+    <numReduceTask>8</numReduceTask>
+    <memoryForMapTask>2048</memoryForMapTask>
+    <memoryForReduceTask>2048</memoryForReduceTask>
+    -->
+
+    <!-- tables -->
+    <inputTables>
+        <table>
+            <name>item_feature</name>
+            <partitions>
+                
+            </partitions>
+        </table>
+    </inputTables>
+    <outputTable>
+        <name>item_features</name>
+        <partition> </partition>
+    </outputTable>
+</mapred>

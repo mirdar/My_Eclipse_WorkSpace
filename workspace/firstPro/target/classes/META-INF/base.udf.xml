@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<udf>
+    <!-- profile -->
+    <baseId>2472e4f0-e532-4df3-9e9f-1dcb1d2ed88b</baseId>
+    <projectId>11370</projectId>
+    <resourceName>firstPro</resourceName>
+    <functionName>myudf</functionName>
+    <idePath>工作流/mirdar</idePath>
+
+    <!-- classes -->
+    <className>my.udf.ExtractPairCount</className>
+</udf>
