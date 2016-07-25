@@ -83,7 +83,7 @@ public class Graph {
 		}
 	}
 
-	public double BFS(String startName,String endName)
+	public double BFS(String startName, String endName)
 	{
 		PriorityQueue<Path> pq = new PriorityQueue<Path>();
 		double bestW = Double.MAX_VALUE;
@@ -93,22 +93,22 @@ public class Graph {
 		clearAll();
 		pq.add(new Path(start, 0));
 		start.dist = 0;
-		if(startName.equals(endName))
+		if (startName.equals(endName))
 		{
 			return 0;
 		}
-		
+
 		while (!pq.isEmpty())
 		{
 			Path vrec = pq.remove();
 			Vertex v = vrec.dest;
-			//界定
-			if(vrec.cost >= bestW && bestW != Double.MAX_VALUE)
+			// 界定
+			if (vrec.cost >= bestW && bestW != Double.MAX_VALUE)
 				break;
 			if (v.scratch != 0)
 				continue;
 			v.scratch = 1;
-			//分支
+			// 分支
 			for (Edge e : v.adj)
 			{
 				if (e.dest.scratch != 0)
@@ -123,7 +123,7 @@ public class Graph {
 				{
 					w.dist = v.dist + cvw;
 					w.prev = v;
-					if(w.name.equals(endName)&&w.dist < bestW)
+					if (w.name.equals(endName) && w.dist < bestW)
 					{
 						bestW = w.dist;
 					}
@@ -131,7 +131,7 @@ public class Graph {
 				}
 			}
 		}
-		
+
 		return bestW;
 	}
 
@@ -158,18 +158,12 @@ public class Graph {
 		System.out.println(dest.name);
 	}
 	/*
-	 * printPath的非递归版本
-	 private void printPath(Vertex dest)
-	{
-		while(dest.prev != null)
-		{
-			System.out.println(dest.name);
-			dest =dest.prev;
-			System.out.println(" <- ");
-		}
-		
-	}
-	 
+	 * printPath的非递归版本 private void printPath(Vertex dest) { while(dest.prev !=
+	 * null) { System.out.println(dest.name); dest =dest.prev;
+	 * System.out.println(" <- "); }
+	 * 
+	 * }
+	 * 
 	 */
 
 	// initializes operation

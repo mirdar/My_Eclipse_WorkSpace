@@ -19,13 +19,13 @@ import com.mirdar.ssa.Vertex;
  */
 
 //精化操作
-public class RefinementOperation { 
+public class RefinementOperation {
 
-	double speed = 500; //500m/min的速度，此时结果与旧金山的差不多
+	double speed = 500; // 500m/min的速度，此时结果与旧金山的差不多
 	double constant = 1;
 
 	// 大部分时间在refinement操作中
-	//大部分时间在subArea上
+	// 大部分时间在subArea上
 
 	public void refinement(Cust cust, double t0, Taxi NNTaxi, double minProfit,
 			ArrayList<Taxi> taxis, ArrayList<RouteSection> routeSection)
@@ -33,11 +33,13 @@ public class RefinementOperation {
 		double r = 0;
 		// 这里当r很小的时候会没法找到点,因为有些可直达点因为小数点的原因导致范围内搜索不到
 		// 原来Math.log(n)是以e为底
-//		r = speed * (t0 + Math.log(1 + ((NNTaxi.profit - minProfit) / constant))
-//				/ Math.log(2));
-//		System.out.println("t0:	"+t0);
-		r = speed * (t0 + Math.log(1 + ((NNTaxi.profit - minProfit) / constant)));
-//		System.out.println("r1: "+r);
+		// r = speed * (t0 + Math.log(1 + ((NNTaxi.profit - minProfit) /
+		// constant))
+		// / Math.log(2));
+		// System.out.println("t0: "+t0);
+		r = speed
+				* (t0 + Math.log(1 + ((NNTaxi.profit - minProfit) / constant)));
+		// System.out.println("r1: "+r);
 		// System.out.println("r: "+r);
 		ArrayList<Taxi> taxiss = new ArrayList<Taxi>();
 		double minProfit2 = Double.MAX_VALUE;
@@ -50,17 +52,18 @@ public class RefinementOperation {
 				taxiss.add(taxis.get(i));
 				if (taxis.get(i).profit < minProfit2)
 					minProfit2 = taxis.get(i).profit;
-				
+
 			}
 		}
-//		System.out.println("1: "+taxis.size());
-//		long startTime3 = System.currentTimeMillis();
+		// System.out.println("1: "+taxis.size());
+		// long startTime3 = System.currentTimeMillis();
 		while (minProfit2 != minProfit)
 		{
 			minProfit = minProfit2;
-			r = speed * (t0 + Math.log(1 + ((NNTaxi.profit - minProfit) / constant)));
-//			taxiss = new ArrayList<Taxi>();
-			ArrayList<Taxi> taxiss2 = new ArrayList<Taxi>(); //范围不断缩小，车辆也不断缩小
+			r = speed * (t0
+					+ Math.log(1 + ((NNTaxi.profit - minProfit) / constant)));
+			// taxiss = new ArrayList<Taxi>();
+			ArrayList<Taxi> taxiss2 = new ArrayList<Taxi>(); // 范围不断缩小，车辆也不断缩小
 			minProfit2 = Double.MAX_VALUE;
 			// 获得r范围内的taxi集合
 			for (int i = 0; i < taxiss.size(); i++)
@@ -76,9 +79,9 @@ public class RefinementOperation {
 		}
 
 		SubArea subArea = new SubArea();
-		
+
 		ArrayList<RouteSection> subRouteSection = subArea
-				.getSubArea2(routeSection, (r + 0.01)*(r+0.01), cust);
+				.getSubArea2(routeSection, (r + 0.01) * (r + 0.01), cust);
 		// 该范围只有一个点
 		if (subRouteSection.size() == 0)
 		{
@@ -98,88 +101,96 @@ public class RefinementOperation {
 		} else
 		{
 			Graph g = new Graph();
-//			int flagCust = 0;
-//			int flagNNTaxi = 0;
-//			long startTime6 = System.currentTimeMillis();
-			
+			// int flagCust = 0;
+			// int flagNNTaxi = 0;
+			// long startTime6 = System.currentTimeMillis();
+			// System.out.println();
 			for (int i = 0; i < subRouteSection.size(); i++)
 			{
 				g.addEdge(subRouteSection.get(i).I1.vectorID,
 						subRouteSection.get(i).I2.vectorID,
 						subRouteSection.get(i).length);
-//				if (subRouteSection.get(i).I1.vectorID == cust.vector.vectorID
-//						|| subRouteSection
-//								.get(i).I2.vectorID == cust.vector.vectorID)
-//					flagCust = 1;
-//				if (subRouteSection.get(i).I1.vectorID == NNTaxi.vector.vectorID
-//						|| subRouteSection
-//								.get(i).I2.vectorID == NNTaxi.vector.vectorID)
-//					flagNNTaxi = 1;
+				// System.out.println(subRouteSection.get(i).I1.vectorID + "
+				// <->"
+				// + subRouteSection.get(i).I2.vectorID + " cust:"
+				// + cust.vector.vectorID);
+				// if (subRouteSection.get(i).I1.vectorID ==
+				// cust.vector.vectorID
+				// || subRouteSection
+				// .get(i).I2.vectorID == cust.vector.vectorID)
+				// flagCust = 1;
+				// if (subRouteSection.get(i).I1.vectorID ==
+				// NNTaxi.vector.vectorID
+				// || subRouteSection
+				// .get(i).I2.vectorID == NNTaxi.vector.vectorID)
+				// flagNNTaxi = 1;
 
 			}
-			
-			
-//			if (flagNNTaxi != 1 || flagCust != 1)
-//			{
-//				System.out.println("NOoooooooooooooo");
-//				int t = 0;
-//				double profitss = Double.MAX_VALUE;
-//				for (int i = 0; i < taxiss.size(); i++)
-//				{
-//					if (taxiss.get(i).profit < profitss)
-//					{
-//						profitss = taxiss.get(i).profit;
-//						t = i;
-//					}
-//				}
-//				taxiss.get(t).ti = 0;
-//				// 这里可能会产生误差，因为taxiss大小有可能不等于0
-//				cust.nnTaxi = taxiss.get(t);
-//			} else
-//			{
-				g.dijkstra(cust.vector.vectorID);
-				
-				// 检测cust是否能直接到达taxiss中的taxi,并去除cust不能到的taxi
-				// System.out.println("taxiss.size: "+taxiss.size());
-				double minDis = Double.MAX_VALUE;
-				for (int j = 0; j < taxiss.size(); j++)
+
+			// if (flagNNTaxi != 1 || flagCust != 1)
+			// {
+			// System.out.println("NOoooooooooooooo");
+			// int t = 0;
+			// double profitss = Double.MAX_VALUE;
+			// for (int i = 0; i < taxiss.size(); i++)
+			// {
+			// if (taxiss.get(i).profit < profitss)
+			// {
+			// profitss = taxiss.get(i).profit;
+			// t = i;
+			// }
+			// }
+			// taxiss.get(t).ti = 0;
+			// // 这里可能会产生误差，因为taxiss大小有可能不等于0
+			// cust.nnTaxi = taxiss.get(t);
+			// } else
+			// {
+			// System.out.println(
+			// "--------------------------------------------------------"
+			// + cust.vector.vectorID);
+			g.dijkstra(cust.vector.vectorID);
+
+			// 检测cust是否能直接到达taxiss中的taxi,并去除cust不能到的taxi
+			// System.out.println("taxiss.size: "+taxiss.size());
+			double minDis = Double.MAX_VALUE;
+			for (int j = 0; j < taxiss.size(); j++)
+			{
+				Vertex v = g.cleanVertex(taxiss.get(j).vector.vectorID);
+				if (v == null)
+					continue;
+				if (v.dist < minDis)
 				{
-					Vertex v = g.cleanVertex(taxiss.get(j).vector.vectorID);
-					if (v == null)
-						continue;
-					if (v.dist < minDis)
-					{
-						minDis = v.dist;
-					}
+					minDis = v.dist;
+				}
+			}
+
+			t0 = minDis / speed;
+			double minBalance = Double.MAX_VALUE;
+			int m = 0;
+			for (int i = 0; i < taxiss.size(); i++)
+			{
+				Vertex v = g.cleanVertex(taxiss.get(i).vector.vectorID);
+				if (v == null)
+					continue;
+				taxiss.get(i).Balance = getBalance(taxiss.get(i), v.dist, t0);
+				taxiss.get(i).ti = v.dist / speed;
+				if (taxiss.get(i).Balance < minBalance)
+				{
+					minBalance = taxiss.get(i).Balance;
+					m = i;
 				}
 
-				t0 = minDis / speed;
-				double minBalance = Double.MAX_VALUE;
-				int m = 0;
-				for (int i = 0; i < taxiss.size(); i++)
+				if (taxiss.get(i).Balance == minBalance)
 				{
-					Vertex v = g.cleanVertex(taxiss.get(i).vector.vectorID);
-					if (v == null)
-						continue;
-					taxiss.get(i).Balance = getBalance(taxiss.get(i),v.dist,t0);
-					taxiss.get(i).ti = v.dist/ speed;
-					if (taxiss.get(i).Balance < minBalance)
+					if (taxiss.get(i).ti < taxiss.get(m).ti)
 					{
-						minBalance = taxiss.get(i).Balance;
 						m = i;
 					}
-
-					if (taxiss.get(i).Balance == minBalance)
-					{
-						if (taxiss.get(i).ti < taxiss.get(m).ti)
-						{
-							m = i;
-						}
-					}
 				}
-				cust.nnTaxi = taxiss.get(m);
 			}
-//		}
+			cust.nnTaxi = taxiss.get(m);
+		}
+		// }
 	}
 
 	// 细化操作的初始化,第一次应该使用推荐最近的
@@ -192,13 +203,13 @@ public class RefinementOperation {
 		{
 			taxiList2.add(taxiList.get(k));
 		}
-		/*Graph g = new Graph();
-		for (int i = 0; i < routeSections.size(); i++)
-		{
-			g.addEdge(routeSections.get(i).I1.vectorID,
-					routeSections.get(i).I2.vectorID,
-					routeSections.get(i).length);
-		}*/
+
+		/*
+		 * Graph g = new Graph(); for (int i = 0; i < routeSections.size(); i++)
+		 * { g.addEdge(routeSections.get(i).I1.vectorID,
+		 * routeSections.get(i).I2.vectorID, routeSections.get(i).length); }
+		 */
+
 		// System.out.println("taxiList size(): "+taxiList2.size());
 		ArrayList<Cust> custs = new ArrayList<Cust>();
 		for (int i = 0; i < custList.size(); i++) // 对每个cust进行细化操作
@@ -243,11 +254,17 @@ public class RefinementOperation {
 				taxis.add(taxi);
 				flag2++;
 			}
-
-			t0 = getNNTaxiDis(cust, taxis.get(t), routeSections, 1500)/speed; //很多时间花在了这里
-//			t0 = g.BFS(cust.vector.vectorID, taxis.get(t).vector.vectorID)/ speed;
-
-			cust.t0 = t0;
+			// long startTime1 = System.currentTimeMillis();
+			t0 = getNNTaxiDis2(cust, taxis.get(t), routeSections, 500) / speed;
+			// System.out.println();
+			// t0 = g.BFS(cust.vector.vectorID,
+			// taxis.get(t).vector.vectorID)/ speed;
+			// //利用分支定界的时间大概为全局搜索的一半
+			// / speed;
+			// long endTime1 = System.currentTimeMillis();
+			// System.out.println("getNNTaxiDis.time in Refinement: "
+			// + (endTime1 - startTime1) + "ms_________");
+			// cust.t0 = t0;
 
 			refinement(cust, t0, taxis.get(t), minProfit, taxis, routeSections);
 
@@ -286,8 +303,6 @@ public class RefinementOperation {
 		SubArea subArea = new SubArea();
 		ArrayList<RouteSection> subRouteSection = subArea
 				.getSubArea(routeSections, x1, x2, y1, y2);
-		// System.out.println("subRouteSectionNNTaxi.size:
-		// "+subRouteSection.size());
 		Graph g = new Graph();
 		int flagCust = 0;
 		int flagNNTaxi = 0;
@@ -304,45 +319,114 @@ public class RefinementOperation {
 					|| subRouteSection
 							.get(i).I2.vectorID == taxi.vector.vectorID)
 				flagNNTaxi = 1;
-			// if((subRouteSection.get(i).I1.vectorID == cust.vector.vectorID &&
-			// subRouteSection.get(i).I2.vectorID == taxi.vector.vectorID)
-			// ||(subRouteSection.get(i).I2.vectorID == cust.vector.vectorID &&
-			// subRouteSection.get(i).I1.vectorID == taxi.vector.vectorID))
-			// System.out.println("have a directly way");
 
 		}
 		// 当最近的taxi与cust在一个vector
 		if (flagCust == 1 && flagNNTaxi == 1)
 		{
+
 			g.dijkstra(cust.vector.vectorID);
-			// double di = g.BFS(cust.vector.vectorID,taxi.vector.vectorID);
+
+			// double di = g.BFS(cust.vector.vectorID, taxi.vector.vectorID);
 			if (g.cleanVertex(taxi.vector.vectorID).dist > 100000)
 			// if(di > 10000)
 			{
-				expand = expand + 10;
+				expand = expand + 500;
 				minDis = getNNTaxiDis(cust, taxi, routeSections, expand);
 			} else
 				minDis = g.cleanVertex(taxi.vector.vectorID).dist;
 		} else
 		{
-			expand = expand + 10;
+			expand = expand + 500;
 			minDis = getNNTaxiDis(cust, taxi, routeSections, expand);
 		}
 		return minDis;
 	}
 
-	// 分支界定法
+	// 将递归写成循环的形式
+	public double getNNTaxiDis2(Cust cust, Taxi taxi,
+			ArrayList<RouteSection> routeSections, double expand)
+	{
+		double minDis = 0;
+		if (cust.vector.vectorID == taxi.vector.vectorID)
+			return minDis;
+		SubArea subArea = new SubArea();
+		ArrayList<RouteSection> subRouteSection = new ArrayList<RouteSection>();
+		Graph g = new Graph();
+		boolean bool = nnTaxiFun(g, taxi, cust, expand, subArea,
+				subRouteSection, routeSections);
+		while (!bool)
+		{
+			expand = expand + 500;
+			subArea = new SubArea();
+			subRouteSection = new ArrayList<RouteSection>();
+			g = new Graph();
+			bool = nnTaxiFun(g, taxi, cust, expand, subArea, subRouteSection,
+					routeSections);
+		}
+		g.dijkstra(cust.vector.vectorID);
+		while (g.cleanVertex(taxi.vector.vectorID).dist > 100000)
+		{
+			expand = expand + 500;
+			subArea = new SubArea();
+			subRouteSection = new ArrayList<RouteSection>();
+			g = new Graph();
+			nnTaxiFun(g, taxi, cust, expand, subArea, subRouteSection,
+					routeSections);
+			g.dijkstra(cust.vector.vectorID);
+		}
+		minDis = g.cleanVertex(taxi.vector.vectorID).dist;
+		return minDis;
+	}
 
-	/*
-	 * public double getNNTaxiDis2(Cust cust,Taxi taxi,ArrayList<RouteSection>
-	 * routeSection) { Graph g = new Graph(); for(int
-	 * i=0;i<routeSection.size();i++) {
-	 * g.addEdge(routeSection.get(i).I1.vectorID,
-	 * routeSection.get(i).I2.vectorID, routeSection.get(i).length); } double
-	 * dist = g.BFS(cust.vector.vectorID, taxi.vector.vectorID);
-	 * 
-	 * return dist; }
-	 */
+	public boolean nnTaxiFun(Graph g, Taxi taxi, Cust cust, double expand,
+			SubArea subArea, ArrayList<RouteSection> subRouteSection,
+			ArrayList<RouteSection> routeSections)
+	{
+		double x1, y1, x2, y2;
+		if (taxi.vector.x <= cust.vector.x)
+		{
+			x1 = taxi.vector.x - expand;
+			x2 = cust.vector.x + expand;
+		} else
+		{
+			x1 = cust.vector.x - expand;
+			x2 = taxi.vector.x + expand;
+		}
+		if (taxi.vector.y <= cust.vector.y)
+		{
+			y1 = taxi.vector.y - expand;
+			y2 = cust.vector.y + expand;
+		} else
+		{
+			y1 = cust.vector.y - expand;
+			y2 = taxi.vector.y + expand;
+		}
+		int flagCust = 0;
+		int flagNNTaxi = 0;
+		subRouteSection = subArea.getSubArea(routeSections, x1, x2, y1, y2);
+		flagCust = 0;
+		flagNNTaxi = 0;
+		for (int i = 0; i < subRouteSection.size(); i++)
+		{
+			g.addEdge(subRouteSection.get(i).I1.vectorID,
+					subRouteSection.get(i).I2.vectorID,
+					subRouteSection.get(i).length);
+			if (subRouteSection.get(i).I1.vectorID == cust.vector.vectorID
+					|| subRouteSection
+							.get(i).I2.vectorID == cust.vector.vectorID)
+				flagCust = 1;
+			if (subRouteSection.get(i).I1.vectorID == taxi.vector.vectorID
+					|| subRouteSection
+							.get(i).I2.vectorID == taxi.vector.vectorID)
+				flagNNTaxi = 1;
+		}
+		if (flagCust == 1 && flagNNTaxi == 1)
+		{
+			return true;
+		}
+		return false;
+	}
 
 	// Balance更新
 	public double getBalance(Taxi taxi, double d, double t0)

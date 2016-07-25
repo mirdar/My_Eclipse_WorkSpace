@@ -34,66 +34,73 @@ public class ViolentFuction {
 					routeSections.get(i).length);
 
 		}
-		
+
 		for (int i = 0; i < custList.size(); i++)
 		{
-			//为什么每次的dijkstra算法时间不一样
-//			long startTime1 = System.currentTimeMillis();
+			// 为什么每次的dijkstra算法时间不一样
+			// long startTime1 = System.currentTimeMillis();
 			g.dijkstra(custList.get(i).s.vectorID);
-//			long endTime1 = System.currentTimeMillis();
-//			System.out.println("Dijkstra.time in Vilent: "+(endTime1-startTime1)+"ms+++++++++++");
-			
-			Cust cust = new Cust(custList.get(i).custID, custList.get(i).profit,custList.get(i).s);
+			long endTime1 = System.currentTimeMillis();
+			// System.out.println("Dijkstra.time in Vilent: "
+			// + (endTime1 - startTime1) + "ms+++++++++++");
+
+			Cust cust = new Cust(custList.get(i).custID, custList.get(i).profit,
+					custList.get(i).s);
 			ArrayList<Taxi> taxis = new ArrayList<Taxi>();
 			double minBalance = Double.MAX_VALUE;
 			double t0 = 0;
-//			long startTime2 = System.currentTimeMillis();
+			// long startTime2 = System.currentTimeMillis();
 			for (int j = 0; j < taxiList2.size(); j++)
 			{
 				if (taxiList2.get(j) == null)
 					continue;
-				Taxi taxi = new Taxi(taxiList2.get(j).taxiID,taxiList2.get(j).s,
-						(Distance.distance2(custList.get(i).s,taxiList2.get(j).s)),
+				Taxi taxi = new Taxi(taxiList2.get(j).taxiID,
+						taxiList2.get(j).s,
+						(Distance.distance2(custList.get(i).s,
+								taxiList2.get(j).s)),
 						taxiList2.get(j).profitViolent);
 				taxi.index = j;
 				taxis.add(taxi);
-//				flag++;
+				// flag++;
 			}
-			
+
 			double nnSp = Double.MAX_VALUE;
-			for(int j1=0;j1<taxis.size();j1++)
+			for (int j1 = 0; j1 < taxis.size(); j1++)
 			{
-				if(g.cleanVertex(taxis.get(j1).vector.vectorID).dist < nnSp)
+				if (g.cleanVertex(taxis.get(j1).vector.vectorID).dist < nnSp)
 				{
 					nnSp = g.cleanVertex(taxis.get(j1).vector.vectorID).dist;
 				}
 			}
-			t0 = nnSp/speed;
-//			t0 = getNNTaxiDis(cust, taxis.get(t), routeSections, 10) / speed;
+			t0 = nnSp / speed;
+			// t0 = getNNTaxiDis(cust, taxis.get(t), routeSections, 10) / speed;
 			int m = 0;
 			for (int k = 0; k < taxis.size(); k++)
 			{
 				taxis.get(k).Balance = getBalance(taxis.get(k),
 						g.cleanVertex(taxis.get(k).vector.vectorID).dist, t0);
-				taxis.get(k).ti = g.cleanVertex(taxis.get(k).vector.vectorID).dist/speed;
+				taxis.get(
+						k).ti = g.cleanVertex(taxis.get(k).vector.vectorID).dist
+								/ speed;
 				if (taxis.get(k).Balance < minBalance)
 				{
 					minBalance = taxis.get(k).Balance;
 					m = k;
 				}
-				
+
 				if (taxis.get(k).Balance == minBalance)
 				{
-					if(taxis.get(k).ti < taxis.get(m).ti)
+					if (taxis.get(k).ti < taxis.get(m).ti)
 					{
 						m = k;
 					}
 				}
 			}
-//			long endTime2 = System.currentTimeMillis();
-//			System.out.println("otherOperation.time in Violen: "+(endTime2-startTime2)+"ms+++++++++");
-//			if(sameBalance >= 1)
-//				System.out.println("sameBalanceViolent: "+sameBalance);
+			// long endTime2 = System.currentTimeMillis();
+			// System.out.println("otherOperation.time in Violen:
+			// "+(endTime2-startTime2)+"ms+++++++++");
+			// if(sameBalance >= 1)
+			// System.out.println("sameBalanceViolent: "+sameBalance);
 			cust.nnTaxi = taxis.get(m);
 			custs.add(cust);
 			taxiList2.set(taxis.get(m).index, null);
@@ -104,7 +111,7 @@ public class ViolentFuction {
 
 	public double getBalance(Taxi taxi, double d, double t0)
 	{
-		return taxi.profit + constant * (Math.pow(Math.E, -t0 + d/speed) - 1);
+		return taxi.profit + constant * (Math.pow(Math.E, -t0 + d / speed) - 1);
 	}
 
 	// 得到离cust最近的taxi到cust的局部最短路径
