@@ -9,16 +9,17 @@ public class TaxiRequest {
 
 	public int taxiID;
 	public Vector s;
-	//当前位置
-//	public Location s;
-	//当前车辆状态，是否有人，0/1
+	// 当前位置
+	// public Location s;
+	// 当前车辆状态，是否有人，0/1
 	int status;
-	//(请求时间) 直接设置为从该位置到custRequest的时间
+	// (请求时间) 直接设置为从该位置到custRequest的时间
 	double t;
 	public double profit;
 	public double profitDirect;
 	public double profitViolent;
-	
+	public double profitFast;
+
 	public void setLocation(Vector Rs)
 	{
 		s = Rs;
@@ -27,7 +28,7 @@ public class TaxiRequest {
 	{
 		profit = profit + custRequest.profit;
 	}
-	
+
 	public void clear()
 	{
 		profit = 0;

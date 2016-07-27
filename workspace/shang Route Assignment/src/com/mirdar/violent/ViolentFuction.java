@@ -14,7 +14,7 @@ import com.mirdar.ssa.Graph;
 public class ViolentFuction {
 
 	double speed = 500;
-	double constant = 1;
+	double constant = 50;
 	public ArrayList<Cust> violentSearch(ArrayList<TaxiRequest> taxilist,
 			ArrayList<CustRequest> custList,
 			ArrayList<RouteSection> routeSections)

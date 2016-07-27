@@ -22,7 +22,7 @@ import com.mirdar.ssa.Vertex;
 public class RefinementOperation {
 
 	double speed = 500; // 500m/min的速度，此时结果与旧金山的差不多
-	double constant = 1;
+	double constant = 50;
 
 	// 大部分时间在refinement操作中
 	// 大部分时间在subArea上
@@ -101,53 +101,14 @@ public class RefinementOperation {
 		} else
 		{
 			Graph g = new Graph();
-			// int flagCust = 0;
-			// int flagNNTaxi = 0;
-			// long startTime6 = System.currentTimeMillis();
-			// System.out.println();
 			for (int i = 0; i < subRouteSection.size(); i++)
 			{
 				g.addEdge(subRouteSection.get(i).I1.vectorID,
 						subRouteSection.get(i).I2.vectorID,
 						subRouteSection.get(i).length);
-				// System.out.println(subRouteSection.get(i).I1.vectorID + "
-				// <->"
-				// + subRouteSection.get(i).I2.vectorID + " cust:"
-				// + cust.vector.vectorID);
-				// if (subRouteSection.get(i).I1.vectorID ==
-				// cust.vector.vectorID
-				// || subRouteSection
-				// .get(i).I2.vectorID == cust.vector.vectorID)
-				// flagCust = 1;
-				// if (subRouteSection.get(i).I1.vectorID ==
-				// NNTaxi.vector.vectorID
-				// || subRouteSection
-				// .get(i).I2.vectorID == NNTaxi.vector.vectorID)
-				// flagNNTaxi = 1;
 
 			}
 
-			// if (flagNNTaxi != 1 || flagCust != 1)
-			// {
-			// System.out.println("NOoooooooooooooo");
-			// int t = 0;
-			// double profitss = Double.MAX_VALUE;
-			// for (int i = 0; i < taxiss.size(); i++)
-			// {
-			// if (taxiss.get(i).profit < profitss)
-			// {
-			// profitss = taxiss.get(i).profit;
-			// t = i;
-			// }
-			// }
-			// taxiss.get(t).ti = 0;
-			// // 这里可能会产生误差，因为taxiss大小有可能不等于0
-			// cust.nnTaxi = taxiss.get(t);
-			// } else
-			// {
-			// System.out.println(
-			// "--------------------------------------------------------"
-			// + cust.vector.vectorID);
 			g.dijkstra(cust.vector.vectorID);
 
 			// 检测cust是否能直接到达taxiss中的taxi,并去除cust不能到的taxi
